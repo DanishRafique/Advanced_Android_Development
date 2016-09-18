@@ -17,6 +17,8 @@ package com.example.android.sunshine.app;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
 import android.text.format.Time;
 
@@ -245,5 +247,30 @@ public class Utility {
             return R.drawable.art_clouds;
         }
         return -1;
+    }
+    /** Returns true if the network is available or about to become available
+     * @param c Context used to get the ConectivityManager
+     * @return
+     */
+    static public boolean isNetworkAvailable(Context c){
+        /** ConnectivityManger Class that answers queries about the state of network connectivity. It also notifies applications when network connectivity changes. Get an instance of this class by calling Context.getSystemService(Context.CONNECTIVITY_SERVICE).
+
+         The primary responsibilities of this class are to:
+
+         Monitor network connections (Wi-Fi, GPRS, UMTS, etc.)
+         Send broadcast intents when network connectivity changes
+         Attempt to "fail over" to another network when connectivity to a network is lost
+         Provide an API that allows applications to query the coarse-grained or fine-grained state of the available networks
+         Provide an API that allows applications to request and select networks for their data traffic*/
+
+        ConnectivityManager cm = (ConnectivityManager)c.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        //NetworkInfo: Describes the status of a network interface of a given type (currently either Mobile or Wi-Fi).
+        //The method getActiveNetworkInfo() returns a NetworkInfo instance representing the first
+        //connected network interface it can find, or null if none of the interfaces
+        // is connected (meaning that an internet connection is not available
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }
 }
