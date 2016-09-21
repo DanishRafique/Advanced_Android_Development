@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- To add a built-in View to your user interface, you specify it in an XML element and
+    control its appearance and behavior with element attributes. Well-written custom
+    views can also be added and styled via XML. To enable this behavior in your
+    custom view, you must:
+
+Define custom attributes for your view in a <declare-styleable> resource element
+Specify values for the attributes in your XML layout
+Retrieve attribute values at runtime
+Apply the retrieved attribute values to your view
+-->
+    <declare-styleable name="LocationEditTextPreference">
+        <attr name="minLength" format="integer" />
+    </declare-styleable>
+</resources>
