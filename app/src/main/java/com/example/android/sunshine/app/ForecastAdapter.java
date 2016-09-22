@@ -86,7 +86,7 @@ public class ForecastAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-
+//A ViewHolder describes an item view and metadata about its place within the RecyclerView.
         ViewHolder viewHolder = (ViewHolder) view.getTag();
 
         int viewType = getItemViewType(cursor.getPosition());
@@ -118,20 +118,33 @@ public class ForecastAdapter extends CursorAdapter {
         // Find TextView and set weather forecast on it
         viewHolder.descriptionView.setText(description);
 
-        // For accessibility, add a content description to the icon field
-        viewHolder.iconView.setContentDescription(description);
 
-        // Read user preference for metric or imperial temperature units
-        boolean isMetric = Utility.isMetric(context);
+        viewHolder.descriptionView.setContentDescription(context.getString(R.string.a11y_forecast,description));
+
+        /**
+         *
+         * For accessibility , we don't want a content description for the icon field
+         * because the information is repeated in the description view and the
+         * icon is not individually selectable
+         *
+         */
+
+
+
 
         // Read high temperature from cursor
-        double high = cursor.getDouble(ForecastFragment.COL_WEATHER_MAX_TEMP);
-        viewHolder.highTempView.setText(Utility.formatTemperature(context, high));
+
+        String high = Utility.formatTemperature(context, cursor.getDouble(ForecastFragment.COL_WEATHER_MAX_TEMP));
+        viewHolder.highTempView.setText(high);
+        viewHolder.highTempView.setContentDescription(context.getString(R.string.a11y_high_temp,high));
+
 
         // Read low temperature from cursor
-        double low = cursor.getDouble(ForecastFragment.COL_WEATHER_MIN_TEMP);
-        viewHolder.lowTempView.setText(Utility.formatTemperature(context, low));
-    }
+
+        String low = Utility.formatTemperature(context, cursor.getDouble(ForecastFragment.COL_WEATHER_MIN_TEMP));
+        viewHolder.lowTempView.setText(low);
+        viewHolder.lowTempView.setContentDescription(context.getString(R.string.a11y_low_temp,low));
+        }
 
     public void setUseTodayLayout(boolean useTodayLayout) {
         mUseTodayLayout = useTodayLayout;
